@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import Card from "./components/Card";
 import List from "./components/List";
@@ -7,7 +6,7 @@ import List from "./components/List";
 const API_KEY = "3a0dab825da64786a4d7e9b46e9b91ec";
 
 function celToFah(celcius) {
-  return (celcius * 9) / 5 + 32;
+  return Math.round((celcius * 9) / 5 + 32);
 }
 
 function App() {
@@ -34,13 +33,11 @@ function App() {
         <Card
           title="Temperature"
           value={`${
-            Object.keys(data).length !== 0
-              ? Math.round(celToFah(data.data[0].temp))
-              : ""
+            Object.keys(data).length !== 0 ? celToFah(data.data[0].temp) : ""
           }°F`}
         />
       </div>
-      <List data={data} />
+      <List data={data} celToFah={celToFah} />
     </div>
   );
 }

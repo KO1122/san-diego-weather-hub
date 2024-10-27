@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function List({ data }) {
+function List({ data, celToFah }) {
   const [searchInput, setSearchInput] = useState("");
   const [minTempInput, setMinTempInput] = useState("");
   const [maxTempInput, setMaxTempInput] = useState("");
@@ -66,9 +66,9 @@ function List({ data }) {
               return (
                 <tr key={i}>
                   <td>{day.datetime}</td>
-                  <td>{day.temp}</td>
-                  <td>{day.min_temp}</td>
-                  <td>{day.max_temp}</td>
+                  <td>{celToFah(day.temp)}°F</td>
+                  <td>{celToFah(day.min_temp)}°F</td>
+                  <td>{celToFah(day.max_temp)}°F</td>
                   <td>{day.weather.description}</td>
                 </tr>
               );
