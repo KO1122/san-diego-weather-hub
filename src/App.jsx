@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import Card from "./components/Card";
-import List from "./components/List";
+import { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import Details from "./pages/Details";
+import Sidebar from "./components/Sidebar";
+import HomeLayout from "./layout/HomeLayout";
 
 const API_KEY = "3a0dab825da64786a4d7e9b46e9b91ec";
-
-function celToFah(celcius) {
-  return Math.round((celcius * 9) / 5 + 32);
-}
-
 function App() {
   const [data, setData] = useState({});
-  const curDate = new Date().toISOString().split("T", 1)[0];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,20 +22,15 @@ function App() {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Weather</h1>
-      <div className="card-container">
-        <Card title="Location" value="San Diego, USA" />
-        <Card title="Date" value={curDate} />
-        <Card
-          title="Temperature"
-          value={`${
-            Object.keys(data).length !== 0 ? celToFah(data.data[0].temp) : ""
-          }°F`}
-        />
-      </div>
-      <List data={data} celToFah={celToFah} />
-    </div>
+    <Routes>
+      <Route element={<HomeLayout />}>
+        <Route path="/">
+          <Route index element={<Home data={data} />} />
+          <Route path=":date" element={<Details data={data} />} />
+        </Route>
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 

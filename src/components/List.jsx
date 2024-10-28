@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function List({ data, celToFah }) {
   const [searchInput, setSearchInput] = useState("");
@@ -57,6 +58,7 @@ function List({ data, celToFah }) {
             <th>Min Temperature</th>
             <th>Max Temperature</th>
             <th>Weather Description</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
@@ -70,6 +72,9 @@ function List({ data, celToFah }) {
                   <td>{celToFah(day.min_temp)}°F</td>
                   <td>{celToFah(day.max_temp)}°F</td>
                   <td>{day.weather.description}</td>
+                  <td>
+                    <Link to={`/${day.datetime}`}>🔗</Link>
+                  </td>
                 </tr>
               );
             })}
